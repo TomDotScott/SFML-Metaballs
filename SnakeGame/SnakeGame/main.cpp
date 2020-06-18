@@ -1,15 +1,10 @@
 #include <iostream>
-
 #include <SFML/Graphics.hpp>
-
 #include "Blob.h"
+#include "Utilities.h"
 
 int main() {
-    const int width = 480;
-    const int height = 320;
-
-
-    sf::RenderWindow window(sf::VideoMode(width, height), "Metaballs");
+    sf::RenderWindow window(sf::VideoMode(utilities::k_width, utilities::k_height), "Metaballs");
 
 
 
@@ -39,13 +34,13 @@ int main() {
         // We must clear the window each time around the loop
         window.clear(sf::Color::White);
         
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < utilities::k_width; x++)
         {
-	        for(int y = 0; y < height; y++)
+	        for(int y = 0; y < utilities::k_height; y++)
 	        {
                 shape.setPosition(static_cast<float>(x), static_cast<float>(y));
                 // work out the square distance between the points and the centre
-                int d = std::hypot((x - b.m_position.x), (y - b.m_position.y));
+                int d = std::hypot((b.m_position.x - x), (b.m_position.y - y));
 	        	// Colour is inversely proportionate to the distance 
                 int col = 1000 * b.m_radius / d;
                 shape.setFillColor({static_cast<uint8_t>(col), static_cast<uint8_t>(col), static_cast<uint8_t>(col) });
@@ -54,6 +49,7 @@ int main() {
         }
 
         b.Render(window);
+        b.Update();
     	
         // Get the window to display its contents
         window.display();
