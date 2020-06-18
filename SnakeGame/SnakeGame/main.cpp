@@ -46,8 +46,9 @@ int main() {
                 shape.setPosition(static_cast<float>(x), static_cast<float>(y));
                 // work out the square distance between the points and the centre
                 int d = std::hypot((x - b.m_position.x), (y - b.m_position.y));
-                int shade = d;
-                shape.setFillColor({static_cast<uint8_t>(shade), static_cast<uint8_t>(shade), static_cast<uint8_t>(shade) });
+	        	// Colour is inversely proportionate to the distance 
+                int col = 1000 * b.m_radius / d;
+                shape.setFillColor({static_cast<uint8_t>(col), static_cast<uint8_t>(col), static_cast<uint8_t>(col) });
                 window.draw(shape);
 	        }
         }
