@@ -2,41 +2,58 @@
 
 #include <SFML/Graphics.hpp>
 
-int main()
-{
+#include "Blob.h"
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Metaballs");
+int main() {
+    const int width = 480;
+    const int height = 320;
+
+
+    sf::RenderWindow window(sf::VideoMode(width, height), "Metaballs");
+
+
 
     // Create an instance of the SFML CircleShape and initialise it so radius is 100
-    sf::CircleShape shape(100.f);
+    sf::CircleShape shape(1);
 
     // Set the shape's fill colour attribute to Green
     shape.setFillColor(sf::Color::Green);
 
+    Blob b = Blob({ 100, 100 });
+
     // Main loop that continues until we call window.close()
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         // Handle any pending SFML events
         // These cover keyboard, mouse,joystick etc.
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-          switch(event.type)
-          {
+        while (window.pollEvent(event)) {
+            switch (event.type) {
             case sf::Event::Closed:
-              window.close();
-            break;
+                window.close();
+                break;
             default:
-              break;
-          }
+                break;
+            }
         }
 
         // We must clear the window each time around the loop
-        window.clear();
+        window.clear(sf::Color::White);
+        
+        for (int x = 0; x < width; x++)
+        {
+	        for(int y = 0; y < height; y++)
+	        {
+                shape.setPosition(static_cast<float>(x), static_cast<float>(y));
+                // work out the square distance between the points and the centre
+                int d = std::hypot((x - b.m_position.x), (y - b.m_position.y));
+                int shade = d;
+                shape.setFillColor({static_cast<uint8_t>(shade), static_cast<uint8_t>(shade), static_cast<uint8_t>(shade) });
+                window.draw(shape);
+	        }
+        }
 
-        // draw our circle shape to the window
-        window.draw(shape);
-
+        b.Render(window);
+    	
         // Get the window to display its contents
         window.display();
     }
