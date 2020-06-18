@@ -6,7 +6,7 @@ namespace utilities
 {
 	const int k_width = 480;
 	const int k_height = 320;
-
+	const int k_blobAmount = 5;
 
 	static int random_range(const int _min, const int _max) //range : [min, max)
 	{

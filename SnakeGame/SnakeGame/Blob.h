@@ -6,8 +6,9 @@ class Blob {
 public:
 	explicit Blob(const sf::Vector2f _position) : m_position(_position)
 	{
-		m_velocity.x = utilities::random_range(1, 5);
-		m_velocity.y = utilities::random_range(1, 5);
+		m_radius = utilities::random_range(4, 40);
+		m_velocity.x = utilities::random_range(1, 10);
+		m_velocity.y = utilities::random_range(1, 10);
 	};
 
 	void Update();
@@ -17,6 +18,6 @@ public:
 	sf::Vector2f m_position;
 	sf::Vector2f m_velocity;
 	
-	float m_radius{ 40.f };	
+	float m_radius;	
 };
 
